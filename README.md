@@ -1,7 +1,14 @@
 # Multicast DNS (mDNS) & DNS-Based Service Discovery (DNS-SD) in Java
 
 ## <a name="introduction"></a> Important
-At this time please use version 2.1.5 or the 2.1.6 snapsots. The master branch has bugs that I am addressing. Once operational the master branch will be published as a new version and added to the Maven Repository. Thank you for your patience while I fix the previously reported bugs and add new functionality, such as support for all RFC 2782 SRV domain names.
+
+This is a modified version of the original mDNS project at http://posicks.github.io/mdnsjava/.
+
+The original version used a really outdated version of `dnsjava` which will print error messages on Java 9+ unless circumvented.
+
+This version has been modified to work with `dnsjava` version 3.5+, which has better OS compatibility when detecting configured DNS servers and search domains, while also more Java 9+ friendly by using internal JDK API as a last resort. 
+
+This version has its Maven package name renamed to `com.github.deje07` and the version number increased to 2.3.0.
 
 ## <a name="introduction"></a> Introduction
 The Multicast DNS (mDNS) [[RFC 6762](http://tools.ietf.org/html/rfc6762)] & DNS-Based Service Discovery (DNS-SD) [[RFC 6763](http://tools.ietf.org/html/rfc6763)] in Java (mdnsjava) project is an extension of dnsjava ([dnsjava.org](http://www.dnsjava.org/)) that implements Multicast DNS (mDNS) [[RFC 6762](http://tools.ietf.org/html/rfc6762)] and DNS-Based Service Discovery (DNS-SD) [[RFC 6763](http://tools.ietf.org/html/rfc6763)] in Java (aka. Bonjour in Java). Unlike other mDNS/DNS-SD implementations mdnsjava does not artificially bind the mDNS and DNS-SD functionality into a single API, instead treating each as a separate feature that is independent from, but related to, the other. This allows clients to use Multicast DNS (mDNS) [RFC 6762](http://tools.ietf.org/html/rfc6762) for name resolution without having to worry about service discovery and simplifies the use of DNS-Base Service Discovery using plain old Unicast DNS (mDNS can be used as a substitiute for DNS for name resolution and DNS can be used as a substitute for mDNS for service discovery).
