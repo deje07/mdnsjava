@@ -2,6 +2,7 @@ package net.posick.mDNS;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -782,8 +783,15 @@ public class MulticastDNSQuerier implements Querier
             resolver.setTimeout(secs);
         }
     }
-    
-    
+
+    @Override
+    public void setTimeout(Duration duration) {
+        long secs = duration.getSeconds();
+        long millis = duration.toMillis() - secs * 1000L;
+        setTimeout((int) secs, (int) millis);
+    }
+
+
     /**
      * {@inheritDoc}
      */

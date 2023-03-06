@@ -3,6 +3,7 @@ package net.posick.mDNS;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
@@ -13,24 +14,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.xbill.DNS.Cache;
-import org.xbill.DNS.Credibility;
-import org.xbill.DNS.Flags;
-import org.xbill.DNS.Header;
-import org.xbill.DNS.Message;
-import org.xbill.DNS.MulticastDNSUtils;
-import org.xbill.DNS.Name;
-import org.xbill.DNS.OPTRecord;
-import org.xbill.DNS.Opcode;
-import org.xbill.DNS.Options;
-import org.xbill.DNS.RRset;
-import org.xbill.DNS.Rcode;
-import org.xbill.DNS.Record;
-import org.xbill.DNS.ResolverListener;
-import org.xbill.DNS.Section;
-import org.xbill.DNS.SetResponse;
-import org.xbill.DNS.TSIG;
-import org.xbill.DNS.WireParseException;
+import org.xbill.DNS.*;
 
 import net.posick.mDNS.MulticastDNSCache.CacheMonitor;
 import net.posick.mDNS.net.DatagramProcessor;
@@ -1004,7 +988,7 @@ public class MulticastDNSMulticastOnlyQuerier implements Querier, PacketListener
     
     public void setEDNS(final int level)
     {
-        setEDNS(level, 0, 0, null);
+        setEDNS(level, 0, 0, (List<EDNSOption>)null);
     }
     
     
@@ -1078,8 +1062,12 @@ public class MulticastDNSMulticastOnlyQuerier implements Querier, PacketListener
     {
         setTimeout(secs, 0);
     }
-    
-    
+
+    @Override
+    public void setTimeout(Duration duration) {
+        timeoutValue = duration.toMillis();
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -1289,8 +1277,8 @@ public class MulticastDNSMulticastOnlyQuerier implements Querier, PacketListener
                     if (cacheRecord.getTTL() > 0)
                     {
                         SetResponse response = cache.lookupRecords(cacheRecord.getName(), cacheRecord.getType(), Credibility.ANY);
-                        RRset[] rrs = response.answers();
-                        if ((rrs != null) && (rrs.length > 0))
+                        List<RRset> rrs = response.answers();
+                        if ((rrs != null) && (rrs.size() > 0))
                         {
                             Record[] cachedRecords = MulticastDNSUtils.extractRecords(rrs);
                             if ((cachedRecords != null) && (cachedRecords.length > 0))

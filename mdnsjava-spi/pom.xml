@@ -3,9 +3,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>net.posick</groupId>
+        <groupId>com.github.deje07</groupId>
         <artifactId>mdnsjava-full</artifactId>
-        <version>2.2.0</version>
+        <version>2.3.0</version>
     </parent>
 
     <packaging>jar</packaging>
@@ -17,12 +17,12 @@
 		<dependency>
 		    <groupId>dnsjava</groupId>
 		    <artifactId>dnsjava</artifactId>
-		    <version>2.1.7</version>
+            <version>${dnsjava.version}</version>
 		</dependency>
         <dependency>
-            <groupId>net.posick</groupId>
+            <groupId>com.github.deje07</groupId>
             <artifactId>mdnsjava</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
@@ -47,8 +47,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.3</version>
                 <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <source>8</source>
+                    <target>8</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -69,8 +69,8 @@
                                 <Bundle-Name>${project.name}</Bundle-Name>
                                 <Bundle-Version>${project.version}</Bundle-Version>
                                 <!-- Bundle-Activator>net.posick.mdns.Activator</Bundle-Activator -->
-                                <Import-Package>org.xbill.DNS;version="[2.1,3)",org.xbill.DNS.utils;version="[2.1,3)",net.posick.mDNS;version="[2.1,3)"</Import-Package>
-                                <Export-Package>net.posick.mDNS.spi;version="2.2.0";uses:="org.xbill.DNS,net.posick.mDNS"net.posick.mDNS.spi.services;version="2.2.0";uses:="org.xbill.DNS,net.posick.mDNS"</Export-Package>
+                                <Import-Package>org.xbill.DNS;version="[3.5,4)",org.xbill.DNS.utils;version="[3.5,4)",net.posick.mDNS;version="[3.5,4)"</Import-Package>
+                                <Export-Package>net.posick.mDNS.spi;version="2.3.0";uses:="org.xbill.DNS,net.posick.mDNS"net.posick.mDNS.spi.services;version="2.3.0";uses:="org.xbill.DNS,net.posick.mDNS"</Export-Package>
                             </instructions>
                             <supportedProjectTypes>
                                 <supportedProjectType>jar</supportedProjectType>

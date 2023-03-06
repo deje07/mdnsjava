@@ -8,7 +8,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
-import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -152,34 +151,28 @@ public class MulticastDNSUtils
         if (results.length > 0)
         {
             int index = 0;
-            Iterator iterator = rrset.rrs(false);
-            if (iterator != null)
-            {
-                while (iterator.hasNext())
-                {
-                    results[index++] = (Record) iterator.next();
-                }
+            for (Record rec : rrset.rrs(false)) {
+                results[index++] = rec;
             }
         }
         
         return results;
     }
-    
-    
-    public static final Record[] extractRecords(final RRset[] rrs)
+
+    public static final Record[] extractRecords(final List<RRset> rrs)
     {
-        if ((rrs == null) || (rrs.length == 0))
+        if ((rrs == null) || (rrs.size() == 0))
         {
             return MulticastDNSUtils.EMPTY_RECORDS;
         }
-        
+
         int capacity = 0;
         for (RRset rr : rrs)
         {
             capacity += rr.size();
         }
         final Record[] results = new Record[capacity];
-        
+
         int index = 0;
         for (RRset rr : rrs)
         {
@@ -189,11 +182,10 @@ public class MulticastDNSUtils
                 results[index++] = record;
             }
         }
-        
+
         return results;
     }
-    
-    
+
     public static String getHostName()
     {
         String hostname = System.getenv().get("HOSTNAME");
